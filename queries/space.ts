@@ -7,9 +7,12 @@ export interface Launch {
     links: {
         flickr_images: string[];
         video_link: string;
-        mission_patch: string;
         mission_patch_small: string;
     }
+    rocket: {
+        rocket_name: string;
+    }
+    details: string;
 }
 
 export interface LaunchResponse {
@@ -21,6 +24,8 @@ export const LAUNCHES = gql`
         launchesPast(limit: 30) {
             mission_name
             launch_date_local
+            id
+            details
             launch_site {
                 site_name_long
             }
@@ -29,9 +34,10 @@ export const LAUNCHES = gql`
                 video_link
                 flickr_images
                 mission_patch_small
-                mission_patch
             }
-            id
+            rocket {
+                rocket_name
+            }
         }
     }
 `
