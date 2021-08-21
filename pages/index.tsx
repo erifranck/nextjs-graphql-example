@@ -3,21 +3,41 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { LAUNCHES, LaunchResponse } from '../queries/space'
 import {useQuery} from '@apollo/client'
-import { Grid, GridItem } from '@chakra-ui/react'
+import { Grid, GridItem, Spinner, useBreakpointValue } from '@chakra-ui/react'
+import { Card } from '../components/Card'
 
 const Home: NextPage = () => {
+  const variantColumnTemplate = useBreakpointValue({base: "repeat(1, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(5, 1fr)" })
   const {loading, error, data} = useQuery<LaunchResponse>(LAUNCHES)
-  if (loading) return <div> loading... </div>
+  if (loading) return (
+    <Spinner
+      thickness="5px"
+      speed="0.5s"
+      emptyColor="gray.200"
+      color="blue.500"
+      size="xl"
+    />
+  )
   if (error) return <div> { JSON.stringify(error) } </div>
   return (
-    <Grid templateColumns="repeat(6, 1fr)" gab={6}>
+    <Grid templateColumns={variantColumnTemplate} columnGap="20px" rowGap="30px" >
       {
-        data && data.launchesPast.map(mission => (
-          <GridItem key={mission.id}>
-            <img src={mission.links.mission_patch_small} />
-            <div>{mission.mission_name}</div>
-          </GridItem>
-        ))
+        data && data.launchesPast.map(mission => {
+          const { rocket, mission_name, links, details } = mission
+          const {mission_patch_small, flickr_images} = links
+          const imageUrl = flickr_images.length ? flickr_images[0] : mission_patch_small
+          return (
+            <GridItem key={mission.id}>
+              <Card
+                missionName={mission_name}
+                missionDetails={details}
+                rocketName={rocket.rocket_name}
+                imageUrl={imageUrl}
+              />
+            </GridItem>
+          )
+        }
+        )
       }
     </Grid>
   )
