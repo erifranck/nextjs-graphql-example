@@ -7,6 +7,8 @@ export interface Launch {
     links: {
         flickr_images: string[];
         video_link: string;
+        mission_patch: string;
+        mission_patch_small: string;
     }
 }
 
@@ -26,6 +28,8 @@ export const LAUNCHES = gql`
                 article_link
                 video_link
                 flickr_images
+                mission_patch_small
+                mission_patch
             }
             id
         }

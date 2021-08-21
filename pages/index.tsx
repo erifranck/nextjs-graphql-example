@@ -14,7 +14,7 @@ const Home: NextPage = () => {
       {
         data && data.launchesPast.map(mission => (
           <GridItem key={mission.id}>
-            { mission.links.flickr_images.length && <img src={mission.links.flickr_images[0]} /> }
+            <img src={mission.links.mission_patch_small} />
             <div>{mission.mission_name}</div>
           </GridItem>
         ))
