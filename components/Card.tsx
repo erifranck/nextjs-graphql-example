@@ -19,7 +19,7 @@ export const Card: React.FC<Props> = (props) => {
                 </Center>
             </Box>
             <Center>
-                <Box boxSize={infoVariant} pt="20px" >
+                <Box boxSize={infoVariant} pt="20px" overflow="hidden" >
                     <Box
                         mt="1"
                         fontWeight="semibold"
