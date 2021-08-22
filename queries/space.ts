@@ -3,10 +3,10 @@ import { gql } from "@apollo/client";
 export interface Launch {
     id: string;
     mission_name: string;
-    launch_date_local: string;
     links: {
         flickr_images: string[];
         video_link: string;
+        article_link: string;
         mission_patch_small: string;
     }
     rocket: {
@@ -20,10 +20,9 @@ export interface LaunchResponse {
 }
 
 export const LAUNCHES = gql`
-    {
-        launchesPast(limit: 30) {
+    query SearchLaunches($find: LaunchFind) {
+        launchesPast(limit: 30, find: $find) {
             mission_name
-            launch_date_local
             id
             details
             launch_site {
