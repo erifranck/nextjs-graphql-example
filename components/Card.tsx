@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/layout';
-import { Center, Image, useBreakpointValue } from '@chakra-ui/react';
+import { Center, Image } from '@chakra-ui/react';
 import image from 'next/image';
 import React from 'react';
 
@@ -8,18 +8,18 @@ interface Props {
     missionName: string;
     rocketName: string;
     missionDetails?: string;
+    onClick?: () => void;
 }
 export const Card: React.FC<Props> = (props) => {
-    const infoVariant = useBreakpointValue({base: 'sm', lg: 'md'}) 
     return (
-        <Box borderWidth="1px" borderRadius="lg" shadow="xs" >
+        <Box borderWidth="1px" borderRadius="lg" shadow="xs" onClick={ () => { if (props.onClick) props.onClick() }} >
             <Box h="300px" overflow="hidden" borderBlockEndWidth="2px" >
                 <Center>
                     <Image src={props.imageUrl} />
                 </Center>
             </Box>
             <Center>
-                <Box boxSize={infoVariant} pt="20px" overflow="hidden" >
+                <Box boxSize="sm" pt="20px" overflow="hidden" >
                     <Box
                         mt="1"
                         fontWeight="semibold"
